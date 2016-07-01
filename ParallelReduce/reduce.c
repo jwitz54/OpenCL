@@ -29,8 +29,11 @@ int main(int argc, char**argv){
 	context = clCreateContext(NULL, 1, &device, NULL, NULL, &status);
 
 	/*Create Command Queue*/
-	cl_command_queue command_queue;
-	command_queue = clCreateCommandQueueWithProperties(context, device, 0, &status);
+	cl_command_queue cmdQueue;
+	cmdQueue = clCreateCommandQueueWithProperties(context, device, 0, &status);
 
+	/*Create buffer for input data*/
+	cl_mem bufInputData;
+	bufInputData = clCreateBuffer(context, CL_MEM_READ_ONLY, DATA_SIZE * sizeof(int), hInputData, &status);
 	
 }
