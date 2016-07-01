@@ -19,5 +19,18 @@ int main(int argc, char**argv){
 	/*Find Platforms*/
 	cl_platform_id platform;
 	status = clGetPlatformIDs(1, &platform, NULL);
+	
+	/*Find Device*/
+	cl_device_id device;
+	status = clGetDeviceIDs(platform, CL_DEVICE_TYPE_CPU, 1, &device, NULL);
 
+	/*Create Context*/
+	cl_context context;
+	context = clCreateContext(NULL, 1, &device, NULL, NULL, &status);
+
+	/*Create Command Queue*/
+	cl_command_queue command_queue;
+	command_queue = clCreateCommandQueueWithProperties(context, device, 0, &status);
+
+	
 }
