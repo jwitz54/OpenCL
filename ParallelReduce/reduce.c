@@ -53,9 +53,9 @@ int main(int argc, char**argv){
 	status = clEnqueueFillBuffer(cmdQueue, bufOutputData, &zero, sizeof(int), 0, DATA_SIZE * sizeof(int), 0, NULL, NULL);
 
 	/*Create Prog*/
-	char *programSource = readFile("histogram.cl"); //find readfile
+	char *programSource = readFile("reduce.cl"); //find readfile
 	size_t programSourceLen = strlen(programSource);
-	cl_program program = clCreateProgramWithSource(context, 1, (const char**)&programSource, &programsourceLen, &status);
+	cl_program program = clCreateProgramWithSource(context, 1, (const char**)&programSource, &programSourceLen, &status);
 
 	status = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
 
@@ -78,10 +78,12 @@ int main(int argc, char**argv){
 	localWorkSize[0] = 5;
 
 	/*Enqueue Kernel*/
-	status = clEnqueueNDRangleKernel(cmdQueue, kernel, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
+	status = clEnqueueNDRangeKernel(cmdQueue, kernel, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
 
 	/*Read output*/
 	status = clEnqueueReadBuffer(cmdQueue, bufOutputData, CL_TRUE, 0, sizeof(int) * DATA_SIZE, hOutputData, 0, NULL, NULL);
+
+	printf("Result: %i \n", hOutputData[0]);
 
 	return (0);	
 }
