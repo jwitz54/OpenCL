@@ -94,7 +94,7 @@ int main(int argc, char**argv){
 	globalWorkSize[0] = DATA_SIZE;
 
 	size_t localWorkSize[1];
-	localWorkSize[0] = 5;
+	localWorkSize[0] = 4;
 
 	/*Enqueue Kernel*/
 	status = clEnqueueNDRangeKernel(cmdQueue, kernel, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
